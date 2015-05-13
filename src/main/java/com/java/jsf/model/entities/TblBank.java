@@ -35,6 +35,7 @@ public class TblBank implements java.io.Serializable {
 
 	public TblBank(int id, String name, Date modifyTime, int status,
 			Boolean public_) {
+		this.id = id;
 		this.name = name;
 		this.modifyTime = modifyTime;
 		this.status = status;

@@ -115,10 +115,12 @@
 								<f:selectItem itemLabel="Tam dung" itemValue="3" />
 							</p:selectOneMenu>
 
-							<p:outputLabel value="Public:" />
-							<p:selectBooleanCheckbox value="#{bankBean.bank.public_}" />
+							<p:outputLabel for="public_" value="Public:" />
+							<p:selectBooleanCheckbox id="public_"
+								value="#{bankBean.bank.public_}" />
 						</p:panelGrid>
 					</p:outputPanel>
+					<h:inputHidden value="#{bankBean.bank.id}" />
 					<p:commandButton id="confirm" value="Update" update=":formList"
 						actionListener="#{bankBean.updateBank(event)}"
 						styleClass="ui-confirmdialog-yes" icon="ui-icon-check"

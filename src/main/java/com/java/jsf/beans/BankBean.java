@@ -54,7 +54,7 @@ public class BankBean {
 		if (BANK_SERVICE.updateBank(bank)) {
 			msg = "Update bank succesfully!";
 		} else {
-			msg = "Add bank failed!";
+			msg = "Update bank failed!";
 		}
 		FacesContext context = FacesContext.getCurrentInstance();
 		context.addMessage(null, new FacesMessage("Message!", msg));
