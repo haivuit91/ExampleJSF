@@ -21,6 +21,7 @@ public class BankBean {
 
 	private TblBank bank;
 	private List<TblBank> listBank;
+	private String msg;
 
 	public BankBean() {
 		if (bank == null) {
@@ -34,7 +35,6 @@ public class BankBean {
 	}
 
 	public void addBank(ActionEvent event) {
-		String msg;
 		Date date = new Date();
 		TblBank bank = new TblBank(this.bank.getName(), date,
 				this.bank.getStatus(), this.bank.getPublic_());
@@ -43,13 +43,11 @@ public class BankBean {
 		} else {
 			msg = "Add bank failed!";
 		}
-		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
-				msg, "Message!");
-		FacesContext.getCurrentInstance().addMessage(null, message);
+		FacesContext context = FacesContext.getCurrentInstance();
+		context.addMessage(null, new FacesMessage("Message!", msg));
 	}
 
 	public void updateBank(ActionEvent event) {
-		String msg;
 		Date date = new Date();
 		TblBank bank = new TblBank(this.bank.getId(), this.bank.getName(),
 				date, this.bank.getStatus(), this.bank.getPublic_());
@@ -58,21 +56,18 @@ public class BankBean {
 		} else {
 			msg = "Add bank failed!";
 		}
-		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
-				msg, "Message!");
-		FacesContext.getCurrentInstance().addMessage(null, message);
+		FacesContext context = FacesContext.getCurrentInstance();
+		context.addMessage(null, new FacesMessage("Message!", msg));
 	}
 
 	public void delBank(ActionEvent event) {
-		String msg;
 		if (BANK_SERVICE.delBank(BANK_SERVICE.getBankById(this.bank.getId()))) {
 			msg = "Deleted bank succesfully!";
 		} else {
 			msg = "Deleted bank failed!";
 		}
-		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
-				msg, "Message!");
-		FacesContext.getCurrentInstance().addMessage(null, message);
+		FacesContext context = FacesContext.getCurrentInstance();
+		context.addMessage(null, new FacesMessage("Message!", msg));
 	}
 
 	public TblBank getBank() {
