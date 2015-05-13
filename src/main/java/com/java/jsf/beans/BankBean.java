@@ -38,7 +38,7 @@ public class BankBean {
 		Date date = new Date();
 		TblBank bank = new TblBank(this.bank.getName(), date,
 				this.bank.getStatus(), this.bank.getPublic_());
-		if (BANK_SERVICE.delBank(BANK_SERVICE.getBankById(this.bank.getId()))) {
+		if (BANK_SERVICE.addBank(bank)) {
 			msg = "Add bank succesfully!";
 		} else {
 			msg = "Add bank failed!";

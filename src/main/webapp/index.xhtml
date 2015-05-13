@@ -38,11 +38,13 @@
 					</p:column>
 
 					<p:column headerText="Status" sortBy="#{bank.status}">
-						<h:outputText value="#{bank.status}" />
+						<h:outputText value="Dang su dung" rendered="#{bank.status == 1}" />
+						<h:outputText value="Ngung su dung" rendered="#{bank.status == 2}" />
+						<h:outputText value="Tam dung" rendered="#{bank.status == 3}" />
 					</p:column>
 
 					<p:column headerText="Public" sortBy="#{bank.public_}">
-						<h:outputText value="#{bank.public_}" />
+						<p:selectBooleanCheckbox value="#{bank.public_}" disabled="true" />
 					</p:column>
 
 					<p:column headerText="Action">
@@ -79,8 +81,9 @@
 								<f:selectItem itemLabel="Tam dung" itemValue="3" />
 							</p:selectOneMenu>
 
-							<p:outputLabel value="Public:" />
-							<p:selectBooleanCheckbox value="#{bankBean.bank.public_}" />
+							<p:outputLabel for="public_" value="Public:" />
+							<p:selectBooleanCheckbox id="public_"
+								value="#{bankBean.bank.public_}" />
 						</p:panelGrid>
 					</p:outputPanel>
 					<p:commandButton id="confirm" value="Add" update=":formList"

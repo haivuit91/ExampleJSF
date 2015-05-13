@@ -24,7 +24,7 @@ public class Test {
 
 	public boolean addBank() {
 		Date now = new Date();
-		TblBank bank = new TblBank("Test 2", now, 1, true);
+		TblBank bank = new TblBank("Test 3", now, 3, false);
 		if (BANK_SERVICE.addBank(bank)) {
 			return true;
 		} else {
@@ -47,16 +47,16 @@ public class Test {
 
 		// test.getList();
 
-		/*
-		 * if (test.addBank()) { System.out.print("ok"); } else {
-		 * System.out.print("false"); }
-		 */
-
-		if (test.updateBank()) {
+		if (test.addBank()) {
 			System.out.print("ok");
 		} else {
 			System.out.print("false");
 		}
+
+		/*
+		 * if (test.updateBank()) { System.out.print("ok"); } else {
+		 * System.out.print("false"); }
+		 */
 
 	}
 }
