@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head></h:head>
+<h:body>
+	<ui:composition template="common.xhtml">
+		<ui:define name="content">
+			<h:form>
+				<p:dataTable var="bank" value="#{bankBean.listBank}"
+					widgetVar="bankTable"
+					emptyMessage="No bank found with given criteria"
+					filteredValue="#{bankBean.filteredBank}">
+
+					<f:facet name="header">
+						<p:outputPanel>
+							<h:outputText value="Search all fields:" />
+							<p:inputText id="globalFilter" onkeyup="PF('bankTable').filter()"
+								style="width:150px" placeholder="Enter keyword" />
+						</p:outputPanel>
+					</f:facet>
+
+					<p:column filterBy="#{bank.id}" headerText="Id"
+						footerText="contains" filterMatchMode="contains">
+						<h:outputText value="#{bank.id}" />
+					</p:column>
+
+					<p:column filterBy="#{bank.name}" headerText="Name"
+						footerText="contains" filterMatchMode="contains">
+						<h:outputText value="#{bank.name}" />
+					</p:column>
+
+				</p:dataTable>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

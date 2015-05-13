@@ -1,0 +1,148 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head></h:head>
+<h:body>
+	<ui:composition template="common.xhtml">
+		<ui:define name="content">
+			<h:form id="formList">
+				<p:growl id="msgs" showDetail="true" />
+				<p:dataTable var="bank" value="#{bankBean.listBank}">
+					<f:facet name="header">
+						<p:outputLabel value="Bank management" />
+						<p:toolbar>
+							<f:facet name="left">
+								<p:commandButton value="Add bank" update=":addBank"
+									oncomplete="PF('addDialog').show()" icon="ui-icon-circle-plus"
+									title="Add new bank" />
+							</f:facet>
+						</p:toolbar>
+					</f:facet>
+					<p:column headerText="Id" sortBy="#{bank.id}">
+						<h:outputText value="#{bank.id}" />
+					</p:column>
+
+					<p:column headerText="Name" sortBy="#{bank.name}">
+						<h:outputText value="#{bank.name}" />
+					</p:column>
+
+					<p:column headerText="Modify Time" sortBy="#{bank.modifyTime}">
+						<h:outputText value="#{bank.modifyTime}">
+							<f:convertDateTime pattern="dd-MM-yyyy HH:mm:ss" />
+						</h:outputText>
+					</p:column>
+
+					<p:column headerText="Status" sortBy="#{bank.status}">
+						<h:outputText value="#{bank.status}" />
+					</p:column>
+
+					<p:column headerText="Public" sortBy="#{bank.public_}">
+						<h:outputText value="#{bank.public_}" />
+					</p:column>
+
+					<p:column headerText="Action">
+						<p:commandButton title="Inactive" update=":updateBank"
+							oncomplete="PF('updateDialog').show()" icon="ui-icon-pencil">
+							<f:setPropertyActionListener value="#{bank}"
+								target="#{bankBean.bank}" />
+						</p:commandButton>
+						<p:commandButton title="Active" update=":delBank"
+							oncomplete="PF('delDialog').show()" icon="ui-icon-trash">
+							<f:setPropertyActionListener value="#{bank}"
+								target="#{bankBean.bank}" />
+						</p:commandButton>
+					</p:column>
+				</p:dataTable>
+			</h:form>
+
+			<h:form id="addBank">
+				<p:dialog header="Add new Bank" widgetVar="addDialog" modal="true"
+					showEffect="fade" hideEffect="fade" resizable="false">
+					<p:outputPanel id="addBank" style="text-align:center;">
+						<p:panelGrid style="text-align: left;" columns="2"
+							rendered="#{not empty bankBean.bank}" columnClasses="label,value">
+							<p:outputLabel for="name" value="Name:" />
+							<p:inputText size="30" id="name" value="#{bankBean.bank.name}"
+								required="true">
+								<f:validateLength minimum="4" maximum="20" />
+							</p:inputText>
+
+							<p:outputLabel for="status" value="Status:" />
+							<p:selectOneMenu id="status" value="#{bankBean.bank.status}">
+								<f:selectItem itemLabel="Dang su dung" itemValue="1" />
+								<f:selectItem itemLabel="Ngung su dung" itemValue="2" />
+								<f:selectItem itemLabel="Tam dung" itemValue="3" />
+							</p:selectOneMenu>
+
+							<p:outputLabel value="Public:" />
+							<p:selectBooleanCheckbox value="#{bankBean.bank.public_}" />
+						</p:panelGrid>
+					</p:outputPanel>
+					<p:commandButton id="confirm" value="Add" update=":formList"
+						actionListener="#{bankBean.addBank(event)}"
+						styleClass="ui-confirmdialog-yes" icon="ui-icon-check"
+						oncomplete="PF('addDialog').hide()" />
+					<p:commandButton id="cancel" value="Cancel"
+						onclick="PF('addDialog').hide()" styleClass="ui-confirmdialog-yes"
+						icon="ui-icon-close" type="button" />
+				</p:dialog>
+			</h:form>
+
+			<h:form id="updateBank">
+				<p:dialog header="Update Bank" widgetVar="updateDialog" modal="true"
+					showEffect="fade" hideEffect="fade" resizable="false">
+					<p:outputPanel id="updateBank" style="text-align:center;">
+						<p:panelGrid style="text-align: left;" columns="2"
+							rendered="#{not empty bankBean.bank}" columnClasses="label,value">
+							<p:outputLabel for="name" value="Name:" />
+							<p:inputText size="30" id="name" value="#{bankBean.bank.name}"
+								required="true">
+								<f:validateLength minimum="4" maximum="20" />
+							</p:inputText>
+
+							<p:outputLabel for="status" value="Status:" />
+							<p:selectOneMenu id="status" value="#{bankBean.bank.status}">
+								<f:selectItem itemLabel="Dang su dung" itemValue="1" />
+								<f:selectItem itemLabel="Ngung su dung" itemValue="2" />
+								<f:selectItem itemLabel="Tam dung" itemValue="3" />
+							</p:selectOneMenu>
+
+							<p:outputLabel value="Public:" />
+							<p:selectBooleanCheckbox value="#{bankBean.bank.public_}" />
+						</p:panelGrid>
+					</p:outputPanel>
+					<p:commandButton id="confirm" value="Update" update=":formList"
+						actionListener="#{bankBean.updateBank(event)}"
+						styleClass="ui-confirmdialog-yes" icon="ui-icon-check"
+						oncomplete="PF('updateDialog').hide()" />
+					<p:commandButton id="cancel" value="Cancel"
+						onclick="PF('updateDialog').hide()"
+						styleClass="ui-confirmdialog-yes" icon="ui-icon-close"
+						type="button" />
+				</p:dialog>
+			</h:form>
+
+			<h:form id="delBank">
+				<p:confirmDialog id="delDialog"
+					message="are you really want to delete #{bankBean.bank.name}?"
+					header="Delete bank" severity="alert" widgetVar="delDialog"
+					showEffect="fade" hideEffect="fade" resizable="false">
+					<h:inputHidden value="#{bankBean.bank.id}" />
+					<p:commandButton id="confirm" value="Yes" update=":formList"
+						actionListener="#{bankBean.delBank(event)}"
+						styleClass="ui-confirmdialog-yes" icon="ui-icon-check"
+						oncomplete="PF('delDialog').hide()" />
+					<p:commandButton id="cancel" value="Cancel"
+						onclick="PF('delDialog').hide()" styleClass="ui-confirmdialog-yes"
+						icon="ui-icon-close" type="button" />
+				</p:confirmDialog>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

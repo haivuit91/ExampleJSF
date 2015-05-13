@@ -1,0 +1,6 @@
+com/java/jsf/beans/BankBean.class
+com/java/jsf/model/test/Test.class
+com/java/jsf/model/dao/service/BankDAOService.class
+com/java/jsf/model/dao/BankDAO.class
+com/java/jsf/model/entities/TblBank.class
+com/java/jsf/hibernate/HibernateUtil.class
