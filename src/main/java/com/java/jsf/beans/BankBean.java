@@ -2,7 +2,7 @@ package com.java.jsf.beans;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
@@ -14,7 +14,7 @@ import com.java.jsf.model.dao.service.BankDAOService;
 import com.java.jsf.model.entities.TblBank;
 
 @ManagedBean
-@SessionScoped
+@RequestScoped
 public class BankBean {
 
 	private final BankDAOService BANK_SERVICE = BankDAO.getInstance();

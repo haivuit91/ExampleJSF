@@ -11,7 +11,7 @@
 	<ui:composition template="common.xhtml">
 		<ui:define name="content">
 			<h:form id="formList">
-				<p:growl id="growl" showDetail="true" sticky="true" />
+				<p:growl id="growl" showDetail="true" sticky="false" />
 				<p:dataTable var="bank" value="#{bankBean.listBank}">
 					<f:facet name="header">
 						<p:outputLabel value="Bank management" />
