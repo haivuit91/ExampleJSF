@@ -6,6 +6,7 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -21,7 +22,9 @@ public class BankBean {
 
 	private TblBank bank;
 	private List<TblBank> listBank;
+	private List<TblBank> filteredBank;
 	private String msg;
+	private List<String> _status;
 
 	public BankBean() {
 		if (bank == null) {
@@ -32,6 +35,23 @@ public class BankBean {
 	public List<TblBank> getListBank() {
 		listBank = BANK_SERVICE.getListBank();
 		return listBank;
+	}
+
+	public List<TblBank> getFilteredBank() {
+		return filteredBank;
+	}
+
+	public void setFilteredBank(List<TblBank> filteredBank) {
+		this.filteredBank = filteredBank;
+	}
+
+	public List<String> get_Status() {
+		String[] status = new String[3];
+		status[0] = "Using";
+		status[1] = "Pause";
+		status[2] = "Stop";
+		_status = Arrays.asList(status);
+		return _status;
 	}
 
 	public void addBank(ActionEvent event) {

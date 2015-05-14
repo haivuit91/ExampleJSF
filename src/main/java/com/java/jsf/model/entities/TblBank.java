@@ -14,26 +14,26 @@ public class TblBank implements java.io.Serializable {
 	private Integer id;
 	private String name;
 	private Date modifyTime;
-	private int status;
+	private String status;
 	private Boolean public_;
 
 	public TblBank() {
 	}
 
-	public TblBank(String name, Date modifyTime, int status) {
+	public TblBank(String name, Date modifyTime, String status) {
 		this.name = name;
 		this.modifyTime = modifyTime;
 		this.status = status;
 	}
 
-	public TblBank(String name, Date modifyTime, int status, Boolean public_) {
+	public TblBank(String name, Date modifyTime, String status, Boolean public_) {
 		this.name = name;
 		this.modifyTime = modifyTime;
 		this.status = status;
 		this.public_ = public_;
 	}
 
-	public TblBank(int id, String name, Date modifyTime, int status,
+	public TblBank(int id, String name, Date modifyTime, String status,
 			Boolean public_) {
 		this.id = id;
 		this.name = name;
@@ -65,11 +65,11 @@ public class TblBank implements java.io.Serializable {
 		this.modifyTime = modifyTime;
 	}
 
-	public int getStatus() {
+	public String getStatus() {
 		return this.status;
 	}
 
-	public void setStatus(int status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 

@@ -28,11 +28,21 @@ CREATE TABLE `tbl_bank` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) NOT NULL,
   `modify_time` datetime NOT NULL,
-  `status` int(11) NOT NULL,
+  `status` varchar(45) NOT NULL,
   `public` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tbl_bank`
+--
+
+LOCK TABLES `tbl_bank` WRITE;
+/*!40000 ALTER TABLE `tbl_bank` DISABLE KEYS */;
+INSERT INTO `tbl_bank` VALUES (5,'Test 2','2015-05-13 20:37:35','Using',1),(6,'Test 3','2015-05-13 20:44:38','Stop',0),(7,'dfdfdfdfd','2015-05-13 20:58:00','Pause',0),(8,'hhhhhhh','2015-05-13 22:36:34','Stop',1),(9,'eeeeb','2015-05-13 22:22:11','Pause',0),(10,'New 1','2015-05-13 22:21:54','Stop',1);
+/*!40000 ALTER TABLE `tbl_bank` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -43,4 +53,4 @@ CREATE TABLE `tbl_bank` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-05-13 16:30:03
+-- Dump completed on 2015-05-14  9:36:45

@@ -12,7 +12,10 @@
 		<ui:define name="content">
 			<h:form id="formList">
 				<p:growl id="growl" showDetail="true" sticky="false" />
-				<p:dataTable var="bank" value="#{bankBean.listBank}">
+				<p:dataTable var="bank" value="#{bankBean.listBank}"
+					widgetVar="bankTable"
+					emptyMessage="No bank found with given criteria"
+					filteredValue="#{bankBean.filteredBank}">
 					<f:facet name="header">
 						<p:outputLabel value="Bank management" />
 						<p:toolbar>
@@ -21,29 +24,58 @@
 									oncomplete="PF('addDialog').show()" icon="ui-icon-circle-plus"
 									title="Add new bank" />
 							</f:facet>
+							<f:facet name="right">
+								<p:outputPanel>
+									<h:outputText value="Search all fields:" />
+									<p:inputText id="globalFilter"
+										onkeyup="PF('bankTable').filter()" style="width:150px"
+										placeholder="Enter keyword" />
+								</p:outputPanel>
+							</f:facet>
 						</p:toolbar>
 					</f:facet>
-					<p:column headerText="Id" sortBy="#{bank.id}">
+					<p:column headerText="Id" sortBy="#{bank.id}" filterBy="#{bank.id}">
 						<h:outputText value="#{bank.id}" />
 					</p:column>
 
-					<p:column headerText="Name" sortBy="#{bank.name}">
+					<p:column headerText="Name" sortBy="#{bank.name}"
+						filterBy="#{bank.name}">
 						<h:outputText value="#{bank.name}" />
 					</p:column>
 
-					<p:column headerText="Modify Time" sortBy="#{bank.modifyTime}">
+					<p:column headerText="Modify Time" sortBy="#{bank.modifyTime}"
+						filterBy="#{bank.modifyTime}">
+						<f:facet name="filter">
+							<p:calendar navigator="true" pattern="yyyy-MM-dd HH:mm:ss"
+								onchange="PF('bankTable').filter()" />
+						</f:facet>
 						<h:outputText value="#{bank.modifyTime}">
-							<f:convertDateTime pattern="dd-MM-yyyy HH:mm:ss" />
+							<f:convertDateTime pattern="yyyy-MM-dd HH:mm:ss" />
 						</h:outputText>
 					</p:column>
 
-					<p:column headerText="Status" sortBy="#{bank.status}">
-						<h:outputText value="Dang su dung" rendered="#{bank.status == 1}" />
-						<h:outputText value="Ngung su dung" rendered="#{bank.status == 2}" />
-						<h:outputText value="Tam dung" rendered="#{bank.status == 3}" />
+					<p:column headerText="Status" filterBy="#{bank.status}"
+						filterMatchMode="in">
+						<f:facet name="filter">
+							<p:selectCheckboxMenu label="Status"
+								onchange="PF('bankTable').filter()" panelStyle="width:125px"
+								scrollHeight="90">
+								<f:selectItems value="#{bankBean._Status}" />
+							</p:selectCheckboxMenu>
+						</f:facet>
+						<h:outputText value="#{bank.status}" />
 					</p:column>
 
-					<p:column headerText="Public" sortBy="#{bank.public_}">
+					<p:column headerText="Public" filterBy="#{bank.public_}"
+						filterMatchMode="equals">
+						<f:facet name="filter">
+							<p:selectOneButton onchange="PF('bankTable').filter()">
+								<f:converter converterId="javax.faces.Boolean" />
+								<f:selectItem itemLabel="All" itemValue="" />
+								<f:selectItem itemLabel="True" itemValue="true" />
+								<f:selectItem itemLabel="False" itemValue="false" />
+							</p:selectOneButton>
+						</f:facet>
 						<p:selectBooleanCheckbox value="#{bank.public_}" disabled="true" />
 					</p:column>
 
@@ -76,9 +108,9 @@
 
 							<p:outputLabel for="status" value="Status:" />
 							<p:selectOneMenu id="status" value="#{bankBean.bank.status}">
-								<f:selectItem itemLabel="Dang su dung" itemValue="1" />
-								<f:selectItem itemLabel="Ngung su dung" itemValue="2" />
-								<f:selectItem itemLabel="Tam dung" itemValue="3" />
+								<f:selectItem itemLabel="Using" itemValue="Using" />
+								<f:selectItem itemLabel="Pause" itemValue="Pause" />
+								<f:selectItem itemLabel="Stop" itemValue="Stop" />
 							</p:selectOneMenu>
 
 							<p:outputLabel for="public_" value="Public:" />
@@ -110,9 +142,9 @@
 
 							<p:outputLabel for="status" value="Status:" />
 							<p:selectOneMenu id="status" value="#{bankBean.bank.status}">
-								<f:selectItem itemLabel="Dang su dung" itemValue="1" />
-								<f:selectItem itemLabel="Ngung su dung" itemValue="2" />
-								<f:selectItem itemLabel="Tam dung" itemValue="3" />
+								<f:selectItem itemLabel="Using" itemValue="Using" />
+								<f:selectItem itemLabel="Pause" itemValue="Pause" />
+								<f:selectItem itemLabel="Stop" itemValue="Stop" />
 							</p:selectOneMenu>
 
 							<p:outputLabel for="public_" value="Public:" />

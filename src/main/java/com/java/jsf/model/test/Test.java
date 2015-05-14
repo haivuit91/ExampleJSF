@@ -24,7 +24,7 @@ public class Test {
 
 	public boolean addBank() {
 		Date now = new Date();
-		TblBank bank = new TblBank("Test 3", now, 3, false);
+		TblBank bank = new TblBank("Test 3", now, "Using", false);
 		if (BANK_SERVICE.addBank(bank)) {
 			return true;
 		} else {
@@ -34,7 +34,7 @@ public class Test {
 
 	public boolean updateBank() {
 		Date date = new Date();
-		TblBank bank = new TblBank(3, "Test update", date, 2, true);
+		TblBank bank = new TblBank(3, "Test update", date, "Using", true);
 		if (BANK_SERVICE.updateBank(bank)) {
 			return true;
 		} else {
