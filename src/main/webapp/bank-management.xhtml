@@ -13,10 +13,10 @@
 			<h:form id="formList">
 				<p:growl id="msgs" showDetail="true" sticky="false" />
 				<p:dataTable id="bank" var="bank" value="#{bankBean.listBank}"
-					widgetVar="bankTable" stickyHeader="true"
+					widgetVar="bankTable"
 					emptyMessage="No bank found with given criteria"
 					filteredValue="#{bankBean.filteredBank}"
-					rowStyleClass="#{bank.status == 'Using' ? 'using' :  (bank.status == 'Pause' ? 'pause' : 'stop')}">
+					rowStyleClass="#{bank.status == 'Using' ? 'using' : (bank.status == 'Pause' ? 'pause' : 'stop')}">
 					<f:facet name="header">
 						<p:outputLabel value="Bank management" />
 						<p:toolbar>
@@ -48,11 +48,11 @@
 					<p:column headerText="Modify Time" sortBy="#{bank.modifyTime}"
 						filterBy="#{bank.modifyTime}">
 						<f:facet name="filter">
-							<p:calendar navigator="true" pattern="yyyy-MM-dd HH:mm:ss"
+							<p:calendar navigator="true" pattern="dd-MM-yyyy HH:mm:ss"
 								onchange="PF('bankTable').filter()" />
 						</f:facet>
 						<h:outputText value="#{bank.modifyTime}">
-							<f:convertDateTime pattern="yyyy-MM-dd HH:mm:ss" />
+							<f:convertDateTime pattern="dd-MM-yyyy HH:mm:ss" />
 						</h:outputText>
 					</p:column>
 

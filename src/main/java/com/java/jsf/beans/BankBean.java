@@ -5,10 +5,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
-import javax.persistence.Convert;
-
-import org.primefaces.event.CellEditEvent;
-import org.primefaces.event.RowEditEvent;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -95,7 +91,7 @@ public class BankBean {
 		context.addMessage(null, new FacesMessage("Message!", msg));
 	}
 
-	public String setColor(int id) {
+	/*public String setColor(int id) {
 		String color = "";
 		TblBank bank = BANK_SERVICE.getBankById(id);
 		if (bank.getStatus() == "Using") {
@@ -106,7 +102,7 @@ public class BankBean {
 			color = "red";
 		}
 		return color;
-	}
+	}*/
 
 	public void delBank(ActionEvent event) {
 		if (BANK_SERVICE.delBank(BANK_SERVICE.getBankById(this.bank.getId()))) {
