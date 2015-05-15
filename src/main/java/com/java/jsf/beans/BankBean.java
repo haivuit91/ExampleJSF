@@ -5,6 +5,10 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.persistence.Convert;
+
+import org.primefaces.event.CellEditEvent;
+import org.primefaces.event.RowEditEvent;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -54,6 +58,17 @@ public class BankBean {
 		return _status;
 	}
 
+	public String doLogin() {
+		if (BANK_SERVICE.chenkLogin(this.bank.getName())) {
+			return "bank-management.jsf?faces-redirect=true";
+		} else {
+			msg = "Login failed!";
+			FacesContext context = FacesContext.getCurrentInstance();
+			context.addMessage(null, new FacesMessage("Message!", msg));
+			return "index.jsf";
+		}
+	}
+
 	public void addBank(ActionEvent event) {
 		Date date = new Date();
 		TblBank bank = new TblBank(this.bank.getName(), date,
@@ -78,6 +93,19 @@ public class BankBean {
 		}
 		FacesContext context = FacesContext.getCurrentInstance();
 		context.addMessage(null, new FacesMessage("Message!", msg));
+	}
+
+	public String setColor(int id) {
+		String color = "";
+		TblBank bank = BANK_SERVICE.getBankById(id);
+		if (bank.getStatus() == "Using") {
+			color = "green";
+		} else if (bank.getStatus() == "Pause") {
+			color = "yellow";
+		} else {
+			color = "red";
+		}
+		return color;
 	}
 
 	public void delBank(ActionEvent event) {

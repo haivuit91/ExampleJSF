@@ -22,6 +22,15 @@ public interface BankDAOService {
 	public TblBank getBankById(int id);
 
 	/**
+	 * check login
+	 *
+	 *** @param name
+	 **** @param pwd
+	 * @return true if check login successfully
+	 */
+	public boolean chenkLogin(String name);
+
+	/**
 	 * add new Bank
 	 *
 	 *** @param bank

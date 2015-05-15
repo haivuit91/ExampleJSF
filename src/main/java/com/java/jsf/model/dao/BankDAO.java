@@ -18,6 +18,10 @@ public class BankDAO implements BankDAOService {
 
 	private static BankDAO bankDAO;
 
+	private static Query query;
+
+	private static String hql;
+
 	public static BankDAO getInstance() {
 		if (bankDAO == null) {
 			bankDAO = new BankDAO();
@@ -61,6 +65,30 @@ public class BankDAO implements BankDAOService {
 			session.close();
 		}
 		return bank;
+	}
+
+	@Override
+	public boolean chenkLogin(String name) {
+		boolean check = false;
+		session = util.getSessionFactory().openSession();
+		Transaction tx = null;
+		try {
+			tx = session.beginTransaction();
+			hql = "FROM TblBank B WHERE B.name = :name";
+			query = session.createQuery(hql);
+			query.setParameter("name", name);
+			if (!query.list().isEmpty()) {
+				check = true;
+			}
+			tx.commit();
+		} catch (Exception e) {
+			if (tx != null)
+				tx.rollback();
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+		return check;
 	}
 
 	@Override

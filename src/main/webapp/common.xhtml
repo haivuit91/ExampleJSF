@@ -8,14 +8,23 @@
 
 <h:head>
 	<title>Demo project using JSF, PrimeFaces and Hibernate</title>
+	<style type="text/css">
+		.using {
+			background: green  !important ;
+		}
+		.pause {
+			background: yellow  !important ;
+		}
+		.stop {
+			background: red  !important ;
+		}
+	</style>
 </h:head>
 <h:body>
-	<div id="top">AsianTech</div>
-	<div id="content">
-		<ui:insert name="content">
-			<ui:include src="index.xhtml" />
-		</ui:insert>
-	</div>
-	<div id="bottom">Vu Van Hai</div>
+	AsianTech
+	<ui:insert name="content">
+		<ui:include src="index.xhtml" />
+	</ui:insert>
+	Vũ Văn Hải
 </h:body>
 </html>

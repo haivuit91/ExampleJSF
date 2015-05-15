@@ -10,174 +10,32 @@
 <h:body>
 	<ui:composition template="common.xhtml">
 		<ui:define name="content">
-			<h:form id="formList">
+			<h:form>
 				<p:growl id="growl" showDetail="true" sticky="false" />
-				<p:dataTable var="bank" value="#{bankBean.listBank}"
-					widgetVar="bankTable"
-					emptyMessage="No bank found with given criteria"
-					filteredValue="#{bankBean.filteredBank}">
-					<f:facet name="header">
-						<p:outputLabel value="Bank management" />
-						<p:toolbar>
-							<f:facet name="left">
-								<p:commandButton value="Add bank" update=":addBank"
-									oncomplete="PF('addDialog').show()" icon="ui-icon-circle-plus"
-									title="Add new bank" />
-							</f:facet>
-							<f:facet name="right">
-								<p:outputPanel>
-									<h:outputText value="Search all fields:" />
-									<p:inputText id="globalFilter"
-										onkeyup="PF('bankTable').filter()" style="width:150px"
-										placeholder="Enter keyword" />
-								</p:outputPanel>
-							</f:facet>
-						</p:toolbar>
-					</f:facet>
-					<p:column headerText="Id" sortBy="#{bank.id}" filterBy="#{bank.id}">
-						<h:outputText value="#{bank.id}" />
-					</p:column>
-
-					<p:column headerText="Name" sortBy="#{bank.name}"
-						filterBy="#{bank.name}">
-						<h:outputText value="#{bank.name}" />
-					</p:column>
-
-					<p:column headerText="Modify Time" sortBy="#{bank.modifyTime}"
-						filterBy="#{bank.modifyTime}">
-						<f:facet name="filter">
-							<p:calendar navigator="true" pattern="yyyy-MM-dd HH:mm:ss"
-								onchange="PF('bankTable').filter()" />
-						</f:facet>
-						<h:outputText value="#{bank.modifyTime}">
-							<f:convertDateTime pattern="yyyy-MM-dd HH:mm:ss" />
-						</h:outputText>
-					</p:column>
-
-					<p:column headerText="Status" filterBy="#{bank.status}"
-						filterMatchMode="in">
-						<f:facet name="filter">
-							<p:selectCheckboxMenu label="Status"
-								onchange="PF('bankTable').filter()" panelStyle="width:125px"
-								scrollHeight="90">
-								<f:selectItems value="#{bankBean._Status}" />
-							</p:selectCheckboxMenu>
-						</f:facet>
-						<h:outputText value="#{bank.status}" />
-					</p:column>
-
-					<p:column headerText="Public" filterBy="#{bank.public_}"
-						filterMatchMode="equals">
-						<f:facet name="filter">
-							<p:selectOneButton onchange="PF('bankTable').filter()">
-								<f:converter converterId="javax.faces.Boolean" />
-								<f:selectItem itemLabel="All" itemValue="" />
-								<f:selectItem itemLabel="True" itemValue="true" />
-								<f:selectItem itemLabel="False" itemValue="false" />
-							</p:selectOneButton>
-						</f:facet>
-						<p:selectBooleanCheckbox value="#{bank.public_}" disabled="true" />
-					</p:column>
-
-					<p:column headerText="Action">
-						<p:commandButton title="Inactive" update=":updateBank"
-							oncomplete="PF('updateDialog').show()" icon="ui-icon-pencil">
-							<f:setPropertyActionListener value="#{bank}"
-								target="#{bankBean.bank}" />
-						</p:commandButton>
-						<p:commandButton title="Active" update=":delBank"
-							oncomplete="PF('delDialog').show()" icon="ui-icon-trash">
-							<f:setPropertyActionListener value="#{bank}"
-								target="#{bankBean.bank}" />
-						</p:commandButton>
-					</p:column>
-				</p:dataTable>
+				<p:commandButton value="Login" oncomplete="PF('loginDialog').show()" />
 			</h:form>
 
-			<h:form id="addBank">
-				<p:dialog header="Add new Bank" widgetVar="addDialog" modal="true"
+			<h:form id="Login">
+				<p:dialog header="Login" widgetVar="loginDialog" modal="true"
 					showEffect="fade" hideEffect="fade" resizable="false">
-					<p:outputPanel id="addBank" style="text-align:center;">
+					<p:outputPanel id="Login" style="text-align:center;">
 						<p:panelGrid style="text-align: left;" columns="2"
-							rendered="#{not empty bankBean.bank}" columnClasses="label,value">
+							columnClasses="label,value">
 							<p:outputLabel for="name" value="Name:" />
 							<p:inputText size="30" id="name" value="#{bankBean.bank.name}"
 								required="true">
 								<f:validateLength minimum="4" maximum="20" />
 							</p:inputText>
-
-							<p:outputLabel for="status" value="Status:" />
-							<p:selectOneMenu id="status" value="#{bankBean.bank.status}">
-								<f:selectItem itemLabel="Using" itemValue="Using" />
-								<f:selectItem itemLabel="Pause" itemValue="Pause" />
-								<f:selectItem itemLabel="Stop" itemValue="Stop" />
-							</p:selectOneMenu>
-
-							<p:outputLabel for="public_" value="Public:" />
-							<p:selectBooleanCheckbox id="public_"
-								value="#{bankBean.bank.public_}" />
 						</p:panelGrid>
 					</p:outputPanel>
-					<p:commandButton id="confirm" value="Add" update=":formList"
-						actionListener="#{bankBean.addBank(event)}"
-						styleClass="ui-confirmdialog-yes" icon="ui-icon-check"
-						oncomplete="PF('addDialog').hide()" />
+					<p:commandButton id="confirm" value="Login"
+						action="#{bankBean.doLogin()}" styleClass="ui-confirmdialog-yes"
+						icon="ui-icon-check" oncomplete="PF('loginDialog').hide()" />
 					<p:commandButton id="cancel" value="Cancel"
-						onclick="PF('addDialog').hide()" styleClass="ui-confirmdialog-yes"
-						icon="ui-icon-close" type="button" />
-				</p:dialog>
-			</h:form>
-
-			<h:form id="updateBank">
-				<p:dialog header="Update Bank" widgetVar="updateDialog" modal="true"
-					showEffect="fade" hideEffect="fade" resizable="false">
-					<p:outputPanel id="updateBank" style="text-align:center;">
-						<p:panelGrid style="text-align: left;" columns="2"
-							rendered="#{not empty bankBean.bank}" columnClasses="label,value">
-							<p:outputLabel for="name" value="Name:" />
-							<p:inputText size="30" id="name" value="#{bankBean.bank.name}"
-								required="true">
-								<f:validateLength minimum="4" maximum="20" />
-							</p:inputText>
-
-							<p:outputLabel for="status" value="Status:" />
-							<p:selectOneMenu id="status" value="#{bankBean.bank.status}">
-								<f:selectItem itemLabel="Using" itemValue="Using" />
-								<f:selectItem itemLabel="Pause" itemValue="Pause" />
-								<f:selectItem itemLabel="Stop" itemValue="Stop" />
-							</p:selectOneMenu>
-
-							<p:outputLabel for="public_" value="Public:" />
-							<p:selectBooleanCheckbox id="public_"
-								value="#{bankBean.bank.public_}" />
-						</p:panelGrid>
-					</p:outputPanel>
-					<h:inputHidden value="#{bankBean.bank.id}" />
-					<p:commandButton id="confirm" value="Update" update=":formList"
-						actionListener="#{bankBean.updateBank(event)}"
-						styleClass="ui-confirmdialog-yes" icon="ui-icon-check"
-						oncomplete="PF('updateDialog').hide()" />
-					<p:commandButton id="cancel" value="Cancel"
-						onclick="PF('updateDialog').hide()"
+						onclick="PF('loginDialog').hide()"
 						styleClass="ui-confirmdialog-yes" icon="ui-icon-close"
 						type="button" />
 				</p:dialog>
-			</h:form>
-
-			<h:form id="delBank">
-				<p:confirmDialog id="delDialog"
-					message="are you really want to delete #{bankBean.bank.name}?"
-					header="Delete bank" severity="alert" widgetVar="delDialog"
-					showEffect="fade" hideEffect="fade" resizable="false">
-					<h:inputHidden value="#{bankBean.bank.id}" />
-					<p:commandButton id="confirm" value="Yes" update=":formList"
-						actionListener="#{bankBean.delBank(event)}"
-						styleClass="ui-confirmdialog-yes" icon="ui-icon-check"
-						oncomplete="PF('delDialog').hide()" />
-					<p:commandButton id="cancel" value="Cancel"
-						onclick="PF('delDialog').hide()" styleClass="ui-confirmdialog-yes"
-						icon="ui-icon-close" type="button" />
-				</p:confirmDialog>
 			</h:form>
 		</ui:define>
 	</ui:composition>
